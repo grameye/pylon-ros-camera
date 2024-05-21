@@ -401,7 +401,8 @@ bool PylonCameraImpl<CameraTrait>::grab(std::vector<uint8_t>& image)
     Pylon::CGrabResultPtr ptr_grab_result;
     if ( !grab(ptr_grab_result) )
     {   
-        ROS_ERROR("Error: Grab was not successful");
+        // NOTE: 出力量が膨大になるためコメントアウト
+        // ROS_ERROR("Error: Grab was not successful");
         return false;
     }
     const uint8_t *pImageBuffer = reinterpret_cast<uint8_t*>(ptr_grab_result->GetBuffer());
@@ -443,7 +444,8 @@ bool PylonCameraImpl<CameraTrait>::grab(uint8_t* image)
     Pylon::CGrabResultPtr ptr_grab_result;
     if ( !grab(ptr_grab_result) )
     {   
-        ROS_ERROR("Error: Grab was not successful");
+        // NOTE: 出力量が膨大になるためコメントアウト
+        // ROS_ERROR("Error: Grab was not successful");
         return false;
     }
 
