@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="config_file" default="$(find pylon_camera)/config/default.yaml" />
+    <node name="g3i_camera_initializer_node" pkg="g3i_camera_initializer" type="g3i_camera_initializer_node" output="screen">
+        <rosparam command="load" file="$(arg config_file)" />
+    </node>
+</launch>
