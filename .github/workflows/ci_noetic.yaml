@@ -38,4 +38,6 @@ jobs:
           package-name: |
             camera_control_msgs
             pylon_camera
+            g3i_camera_initializer
+            g3i_camera_initializer_bringup
           vcs-repo-file-url: build_depends.repos

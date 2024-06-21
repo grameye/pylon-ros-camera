@@ -1,6 +1,12 @@
 #  The tf frame under which the images were published
 camera_frame: pylon_camera
 
+# 起動時の撮像有無
+startup_grabbing: false
+
+# 最大転送サイズ
+max_transfer_size: 4194304
+
 #  The DeviceUserID of the camera. If empty, the first camera found in the
 #  device list will be used
 device_user_id: ""
