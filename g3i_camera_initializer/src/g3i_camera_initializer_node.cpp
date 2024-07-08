@@ -18,7 +18,7 @@ void CameraInitializer::initNode(std::shared_ptr<ros::NodeHandle> nh)
     "pylon_camera_node/stop_grabbing");
   this->max_transfer_size_client_ = this->nh_->serviceClient<camera_control_msgs::SetIntegerValue>(
     "pylon_camera_node/set_max_transfer_size");
-  
+
   this->nh_->getParam(
     "/g3i_camera_initializer_node/startup_grabbing", startup_grabbing_);
   this->nh_->getParam(
@@ -33,9 +33,9 @@ void CameraInitializer::initNode(std::shared_ptr<ros::NodeHandle> nh)
 /// @brief カメラ設定の書き換え
 void CameraInitializer::initializeSetting()
 {
-  initializeStartupGrabbing();
+  // NOTE:max_transfer_sizeを変更すると自動でカメラオンになってしまう
   initializeMaxTransferSize();
-  return;
+  initializeStartupGrabbing();
 }
 
 /// @brief 起動時の撮像オンオフの設定
@@ -44,21 +44,16 @@ void CameraInitializer::initializeStartupGrabbing()
   ros::service::waitForService("/pylon_camera_node/stop_grabbing");
 
   // NOTE:起動時はデフォルトでオンになっている
-  if (startup_grabbing_ == false)
-  {
+  if (startup_grabbing_ == false) {
     std_srvs::Trigger trigger_srv_;
     // TODO:エラー番号を付与する
-    if(stop_grabbing_client_.call(trigger_srv_))
-    {
+    if (stop_grabbing_client_.call(trigger_srv_)) {
       ROS_INFO("[g3i_camera_initializer] Successed to set stop_grabbing.");
-    }
-    else
-    {
+    } else {
       ROS_ERROR("[g3i_camera_initializer] Failed to set stop_grabbing.");
     }
   }
 
-  return;
 }
 
 /// @brief 最大転送サイズの設定
@@ -69,15 +64,11 @@ void CameraInitializer::initializeMaxTransferSize()
   camera_control_msgs::SetIntegerValue integer_srv_;
   integer_srv_.request.value = max_transfer_size_;
   // TODO:エラー番号を付与する
-  if(max_transfer_size_client_.call(integer_srv_))
-  {
+  if (max_transfer_size_client_.call(integer_srv_)) {
     ROS_INFO("[g3i_camera_initializer] Successed to set max_transfer_size.");
-  }
-  else
-  {
+  } else {
     ROS_ERROR("[g3i_camera_initializer] Failed to set max_transfer_size.");
   }
-  
-  return;
+
 }
 }
