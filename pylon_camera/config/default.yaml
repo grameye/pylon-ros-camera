@@ -5,7 +5,7 @@ camera_frame: pylon_camera
 startup_grabbing: false
 
 # 最大転送サイズ
-max_transfer_size: 4194304
+max_transfer_size: 1048576
 
 #  The DeviceUserID of the camera. If empty, the first camera found in the
 #  device list will be used
