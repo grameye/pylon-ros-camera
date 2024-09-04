@@ -21,7 +21,7 @@ private:
 
   bool startup_grabbing_ = false;
   int max_transfer_size_ = 4194304;
-  int light_source_preset_ = 5;
+  int light_source_preset_ = 6;
 
   void initializeSetting();
   void initializeStartupGrabbing();
