@@ -7,6 +7,9 @@ startup_grabbing: false
 # 最大転送サイズ
 max_transfer_size: 1048576
 
+# Light source preset
+light_source_preset: 5  # Microscope LED 6500K
+
 #  The DeviceUserID of the camera. If empty, the first camera found in the
 #  device list will be used
 device_user_id: ""

@@ -18,14 +18,19 @@ void CameraInitializer::initNode(std::shared_ptr<ros::NodeHandle> nh)
     "pylon_camera_node/stop_grabbing");
   this->max_transfer_size_client_ = this->nh_->serviceClient<camera_control_msgs::SetIntegerValue>(
     "pylon_camera_node/set_max_transfer_size");
+  this->light_source_preset_client_ = this->nh_->serviceClient<camera_control_msgs::SetIntegerValue>(
+    "pylon_camera_node/set_light_source_preset");
 
   this->nh_->getParam(
     "/g3i_camera_initializer_node/startup_grabbing", startup_grabbing_);
   this->nh_->getParam(
     "/g3i_camera_initializer_node/max_transfer_size", max_transfer_size_);
+  this->nh_->getParam(
+    "/g3i_camera_initializer_node/light_source_preset", light_source_preset_);
 
   ROS_INFO("[g3i_camera_initializer] startup_grabbing: %d", startup_grabbing_);
   ROS_INFO("[g3i_camera_initializer] max_transfer_size: %d", max_transfer_size_);
+  ROS_INFO("[g3i_camera_initializer] light_source_preset: %d", light_source_preset_);
 
   initializeSetting();
 }
@@ -35,6 +40,7 @@ void CameraInitializer::initializeSetting()
 {
   // NOTE:max_transfer_sizeを変更すると自動でカメラオンになってしまう
   initializeMaxTransferSize();
+  initializeLightSourcePreset();
   initializeStartupGrabbing();
 }
 
@@ -69,6 +75,20 @@ void CameraInitializer::initializeMaxTransferSize()
   } else {
     ROS_ERROR("[g3i_camera_initializer] Failed to set max_transfer_size.");
   }
+}
 
+/// @brief LightSourcePresetの設定(明るさ)
+void CameraInitializer::initializeLightSourcePreset()
+{
+  ros::service::waitForService("/pylon_camera_node/set_light_source_preset");
+
+  camera_control_msgs::SetIntegerValue integer_srv_;
+  integer_srv_.request.value = light_source_preset_;
+  // TODO:エラー番号を付与する
+  if (light_source_preset_client_.call(integer_srv_)) {
+    ROS_INFO("[g3i_camera_initializer] Successed to set light_source_preset.");
+  } else {
+    ROS_ERROR("[g3i_camera_initializer] Failed to set light_source_preset.");
+  }
 }
 }
