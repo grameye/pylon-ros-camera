@@ -2498,6 +2498,18 @@ std::string PylonCameraImpl<CameraTraitT>::setLightSourcePreset(const int& mode)
             {
                 cam_->LightSourcePreset.SetValue(LightSourcePresetEnums::LightSourcePreset_Tungsten2800K);
             } 
+            else if (mode == 4)
+            {
+                cam_->LightSourcePreset.SetValue(LightSourcePresetEnums::LightSourcePreset_MicroscopeLED4500K);
+            } 
+            else if (mode == 5)
+            {
+                cam_->LightSourcePreset.SetValue(LightSourcePresetEnums::LightSourcePreset_MicroscopeLED5500K);
+            } 
+            else if (mode == 6)
+            {
+                cam_->LightSourcePreset.SetValue(LightSourcePresetEnums::LightSourcePreset_MicroscopeLED6000K);
+            } 
             else 
             {
                 return "Error: unknown value";
@@ -2557,6 +2569,18 @@ int PylonCameraImpl<CameraTraitT>::getLightSourcePreset()
             {
                 return 3; // Tungsten2800K
             } 
+            else if (cam_->LightSourcePreset.GetValue() == LightSourcePresetEnums::LightSourcePreset_MicroscopeLED4500K)
+            {
+                return 4; // MicroscopeLED4500K
+            } 
+            else if (cam_->LightSourcePreset.GetValue() == LightSourcePresetEnums::LightSourcePreset_MicroscopeLED5500K)
+            {
+                return 5; // MicroscopeLED5500K
+            } 
+            else if (cam_->LightSourcePreset.GetValue() == LightSourcePresetEnums::LightSourcePreset_MicroscopeLED6000K)
+            {
+                return 6; // MicroscopeLED6000K
+            }  
             else 
             {
                 return -3; // Unkonwn
@@ -2574,7 +2598,7 @@ int PylonCameraImpl<CameraTraitT>::getLightSourcePreset()
             else if (cam_->BslLightSourcePreset.GetValue() == Basler_UniversalCameraParams::BslLightSourcePresetEnums::BslLightSourcePreset_Daylight6500K)
             {
                 return 2; // Daylight6500K
-            } 
+            }
             else 
             {
                 return -3; // Unkonwn
