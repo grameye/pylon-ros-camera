@@ -105,7 +105,7 @@ void CameraInitializer::initializeStartupSleeping()
 
   // NOTE:起動時はデフォルトでオンになっている
   camera_control_msgs::SetSleeping set_sleeping_srv_;
-  set_sleeping_srv_.req.set_sleeping = startup_sleeping;
+  set_sleeping_srv_.request.set_sleeping = startup_sleeping_;
   // TODO:エラー番号を付与する
   if (set_sleeping_client_.call(set_sleeping_srv_)) {
     ROS_INFO("[g3i_camera_initializer] Successed to set set_sleeping.");
