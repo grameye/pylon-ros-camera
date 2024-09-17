@@ -103,7 +103,7 @@ void CameraInitializer::initializeStartupSleeping()
 {
   ros::service::waitForService("/pylon_camera_node/set_sleeping");
 
-  // NOTE:起動時はデフォルトでオンになっている
+  // NOTE:起動時はデフォルトで稼働状態
   camera_control_msgs::SetSleeping set_sleeping_srv_;
   set_sleeping_srv_.request.set_sleeping = startup_sleeping_;
   // TODO:エラー番号を付与する
