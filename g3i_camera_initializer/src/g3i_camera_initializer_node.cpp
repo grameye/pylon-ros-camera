@@ -20,6 +20,8 @@ void CameraInitializer::initNode(std::shared_ptr<ros::NodeHandle> nh)
     "pylon_camera_node/set_max_transfer_size");
   this->light_source_preset_client_ = this->nh_->serviceClient<camera_control_msgs::SetIntegerValue>(
     "pylon_camera_node/set_light_source_preset");
+  this->set_sleeping_client_ = this->nh_->serviceClient<camera_control_msgs::SetSleeping>(
+    "pylon_camera_node/set_sleeping");
 
   this->nh_->getParam(
     "/g3i_camera_initializer_node/startup_grabbing", startup_grabbing_);
@@ -27,10 +29,13 @@ void CameraInitializer::initNode(std::shared_ptr<ros::NodeHandle> nh)
     "/g3i_camera_initializer_node/max_transfer_size", max_transfer_size_);
   this->nh_->getParam(
     "/g3i_camera_initializer_node/light_source_preset", light_source_preset_);
+  this->nh_->getParam(
+    "/g3i_camera_initializer_node/startup_sleeping", startup_sleeping_);
 
   ROS_INFO("[g3i_camera_initializer] startup_grabbing: %d", startup_grabbing_);
   ROS_INFO("[g3i_camera_initializer] max_transfer_size: %d", max_transfer_size_);
   ROS_INFO("[g3i_camera_initializer] light_source_preset: %d", light_source_preset_);
+  ROS_INFO("[g3i_camera_initializer] startup_sleeping: %d", startup_sleeping_);
 
   initializeSetting();
 }
@@ -42,6 +47,7 @@ void CameraInitializer::initializeSetting()
   initializeMaxTransferSize();
   initializeLightSourcePreset();
   initializeStartupGrabbing();
+  initializeStartupSleeping();
 }
 
 /// @brief 起動時の撮像オンオフの設定
@@ -90,5 +96,22 @@ void CameraInitializer::initializeLightSourcePreset()
   } else {
     ROS_ERROR("[g3i_camera_initializer] Failed to set light_source_preset.");
   }
+}
+
+/// @brief 起動時の休止状態の設定
+void CameraInitializer::initializeStartupSleeping()
+{
+  ros::service::waitForService("/pylon_camera_node/set_sleeping");
+
+  // NOTE:起動時はデフォルトで稼働状態
+  camera_control_msgs::SetSleeping set_sleeping_srv_;
+  set_sleeping_srv_.request.set_sleeping = startup_sleeping_;
+  // TODO:エラー番号を付与する
+  if (set_sleeping_client_.call(set_sleeping_srv_)) {
+    ROS_INFO("[g3i_camera_initializer] Successed to set set_sleeping.");
+  } else {
+    ROS_ERROR("[g3i_camera_initializer] Failed to set set_sleeping.");
+  }
+
 }
 }
