@@ -724,6 +724,7 @@ void PylonCameraNode::spin()
     {
         if (num_subscribers_raw || num_subscribers_rect)
         {
+            counter ++;
             if (!grabImage())
             { 
                 return;
@@ -782,7 +783,10 @@ void PylonCameraNode::spin()
     } 
     if (pylon_camera_parameter_set_.enable_current_params_publisher_)
     { 
-      currentParamPub();
+      if (counter % 90 == 0) { // 90枚撮像ごとに1回温度をpublishする
+        currentParamPub();
+        counter = 0;
+      }
     } 
 }
 
