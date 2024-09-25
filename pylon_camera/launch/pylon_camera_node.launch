@@ -6,7 +6,8 @@
     <arg name="mtu_size" default="1500" />
     <arg name="startup_user_set" default="CurrentSetting" />
     <arg name="enable_status_publisher" default="true" />
-    <arg name="enable_current_params_publisher" default="true" /> <!--falseにしないとFPSが大幅低下-->
+    <arg name="enable_current_params_publisher" default="false" /> <!--falseにしないとFPSが大幅低下-->
+    <arg name="current_params_publish_by" default="90" /> <!--カメラの状態出力の頻度(/枚)-->
     <arg name="config_file" default="$(find pylon_camera)/config/default.yaml" />
 
     <arg unless="$(arg debug)" name="launch_prefix" value="" />

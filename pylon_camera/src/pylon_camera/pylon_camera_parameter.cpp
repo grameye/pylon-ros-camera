@@ -239,6 +239,11 @@ void PylonCameraParameter::readFromRosParameterServer(const ros::NodeHandle& nh)
         nh.getParam("enable_current_params_publisher", enable_current_params_publisher_);
     }
 
+    if ( nh.hasParam("current_params_publish_by") )
+    {
+        nh.getParam("current_params_publish_by", current_params_publish_by_);
+    }
+
     if ( nh.hasParam("gige/inter_pkg_delay") )
     {
         nh.getParam("gige/inter_pkg_delay", inter_pkg_delay_);
