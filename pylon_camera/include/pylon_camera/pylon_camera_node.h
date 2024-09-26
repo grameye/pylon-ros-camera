@@ -87,6 +87,8 @@ public:
     PylonCameraNode();
     virtual ~PylonCameraNode();
 
+    int counter = 0;
+
     /**
      * initialize the camera and the ros node.
      * calls ros::shutdown if an error occurs.
