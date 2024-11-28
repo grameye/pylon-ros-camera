@@ -261,7 +261,9 @@ PylonCameraNode::PylonCameraNode()
       set_user_output_srvs_(),
       pylon_camera_(nullptr),
       it_(new image_transport::ImageTransport(nh_)),
-      img_raw_pub_(it_->advertise("image_raw", 1)),
+      // NOTE:古い画像がバッファされることを防ぐ
+      // https://erias00.blogspot.com/2017/08/rospublishsubscribe.html
+      img_raw_pub_(it_->advertise("image_raw", 1, true)),
       camera_info_pub_(nh_.advertise<sensor_msgs::CameraInfo>("camera_info", 1)),
       img_rect_pub_(nullptr),
       grab_imgs_raw_as_(
