@@ -2,10 +2,10 @@
 camera_frame: pylon_camera
 
 # 起動時の撮像有無
-startup_grabbing: true
+startup_grabbing: false
 
 # 起動時の休止有無
-startup_sleeping: true
+startup_sleeping: false
 
 # 最大転送サイズ
 max_transfer_size: 1048576
