@@ -257,6 +257,11 @@ public:
     int mtu_size_;
 
     /**
+     * カメラ状態出力の頻度(/枚)
+     */
+    int current_params_publish_by_;
+
+    /**
      * a flag used to enable/disable the node status publisher.
      */
     bool enable_status_publisher_;

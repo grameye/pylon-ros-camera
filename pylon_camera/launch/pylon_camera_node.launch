@@ -7,6 +7,7 @@
     <arg name="startup_user_set" default="CurrentSetting" />
     <arg name="enable_status_publisher" default="true" />
     <arg name="enable_current_params_publisher" default="false" /> <!--falseにしないとFPSが大幅低下-->
+    <arg name="current_params_publish_by" default="90" /> <!--カメラの状態出力の頻度(/枚)-->
     <arg name="config_file" default="$(find pylon_camera)/config/default.yaml" />
 
     <arg unless="$(arg debug)" name="launch_prefix" value="" />
@@ -19,6 +20,7 @@
         <param name="startup_user_set" value="$(arg startup_user_set)"/>
         <param name="enable_status_publisher" value="$(arg enable_status_publisher)"/>
         <param name="enable_current_params_publisher" value="$(arg enable_current_params_publisher)"/>
+        <param name="current_params_publish_by" value="$(arg current_params_publish_by)"/>
     </node>
 
     <!-- disable compressed depth plugin for image transport -->
